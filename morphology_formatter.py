@@ -1,11 +1,13 @@
+import re
+
 fin = open('morphology.txt', 'r')
 fout = open('formatted_morphology.txt', 'w')
 
 for line in fin:
-    morph_list = line.strip().replace(' ', '')[1:-1].split('$^')
+    morph_list = re.findall(r'\^.*?\$', line)
 
     for word in morph_list:
-        choices = word.split('/')
+        choices = word[1:-1].split('/')
         fout.write('\"<{}>\"\n'.format(choices[0]))
 
         for choice in choices[1:]:
